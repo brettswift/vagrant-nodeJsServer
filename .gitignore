@@ -32,5 +32,16 @@ doc/
 .Trashes
 
 
-###Vagrant###
+###SublimeText###
+ 
+# SublimeText project files
+/*.sublime-project
+*.sublime-workspace
+sftp-config*.json
+
+# plugins
+.floo
+
+### Vagrant ###
 .vagrant/
+

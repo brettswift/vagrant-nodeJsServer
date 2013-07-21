@@ -17,6 +17,7 @@ function program_is_installed {
 
 ##############################
 
+### If not everything is installed, install everything..  sledge hammer approach!
 install_count=$((
 			$(program_is_installed git) + 
 			$(program_is_installed puppet)
