@@ -1,12 +1,21 @@
 
+# Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
 
 node node-server {
 	include nodejs::packages
+	
+	# https://forge.puppetlabs.com/proletaryo/nvm_nodejs
+	class { 'nvm_nodejs':
+  	user    => 'vagrant',
+  	version => '0.8.22',
+	}
+# $nvm_nodejs::NODE_PATH : path to the bin directory
+# $nvm_nodejs::NODE_EXEC : full executable path of node engine
+# $nvm_nodejs::NPM_EXEC : full executable path of npm
+
+	info("##### node path: $nvm_nodejs::NODE_PATH")
+	# TODO: add node path to PATH variable, when running the node server process for a particular app. 
+
 }
 
-
-# # install nvm:
-# su -c 'curl https://raw.github.com/creationix/nvm/master/install.sh | sh'
-
-# su -c 'nvm install v0.10.12 -y
 

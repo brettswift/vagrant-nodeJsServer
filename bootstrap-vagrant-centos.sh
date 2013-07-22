@@ -7,37 +7,51 @@
 # example
 # echo "node: $(program_is_installed node)"
 function program_is_installed {
-  # set to 1 initially
-  local return_=1
-  # set to 0 if not found
-  type $1 >/dev/null 2>&1 || { local return_=0; }
-  # return value
+  local return_=0
+ 	if which $1 &> /dev/null; then
+   	local return_=1 #set to 1 when found
+ 	fi
   echo "$return_"
 }
 
+# usage:  $1 = module
+function install_puppet_module_if_required {
+ output=`su root -c 'puppet module list'`
+ echo $output
+ if [[ "$output" == *"$1"* ]]; then
+   echo "module $1 already installed"
+ else
+   echo `su root -c "puppet module install $1"`
+   echo "module $1 finished installing"
+   echo "** ignore the above message about command not found**"
+ fi
+}
 ##############################
+	
+	echo "running bootstrap.  Installing git, puppet, nvm . . . "
 
-### If not everything is installed, install everything..  sledge hammer approach!
-install_count=$((
-			$(program_is_installed git) + 
-			$(program_is_installed puppet)
-			));
+### ensure stuff is installed
+#  git is probably not required. 
+# if [ $(program_is_installed git) == 0 ]; then
+# 	su -c 'yum update -y' 
+# 	su -c 'yum install git -y -v'
+# else
+# 	echo "git already installed"
+# fi
 
-if [ "$install_count" != "2" ]; then
-	echo "running bootstrap.  Installing git, puppet . . . "
-	su -c 'yum update -y' 
-	 
-	su -c 'yum install git -y'
-	# # puppet repo
+if [ $(program_is_installed puppet) == 0 ]; then
 	su -c  'rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm'
-
-	# # puppet
-	su -c 'yum install puppet -y'
-
-	#TODO: this needs to move into puppet
-	su -c 'puppet module install proletaryo/nvm_nodejs'
+	su -c 'yum install puppet -y -v'
 else
-	echo "bootstrap previously completed.  Git, puppet already installed."
+	echo "puppet already installed"
 fi
+
+echo "$(install_puppet_module_if_required proletaryo-nvm_nodejs)"
+echo "$(install_puppet_module_if_required puppetlabs-stdlib)"
+
+
+
+echo "######## bootstrap completed #########"
+
 
 

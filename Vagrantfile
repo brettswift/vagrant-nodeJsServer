@@ -14,13 +14,17 @@ Vagrant.configure("2") do |config|
 		#bridged
 		# nodeserver.vm.network :public_network
 
+		#plugin is currently broken
+		# value = `vagrant snapshot list`
+		# puts value
+
 		nodeserver.vm.provision :shell, :path => "bootstrap-vagrant-centos.sh"
 
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path = "manifests"
 			puppet.module_path    = "modules"
 			puppet.manifest_file  = "site.pp"
-			puppet.options        = "--verbose " #--debug"
+			puppet.options        = "--verbose"# --debug"
 		end
 
 		nodeserver.vm.provider :virtualbox do |vb|
