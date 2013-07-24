@@ -2,7 +2,7 @@
 # Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
 
 node node-server {
-	include nodejs::packages
+	include nodejs
 	
 	# https://forge.puppetlabs.com/proletaryo/nvm_nodejs
 	class { 'nvm_nodejs':
