@@ -21,9 +21,10 @@ node node-server_old {
 node node-server {
 
 
-	# class {'nodesite':
+	class {'nodesite':
 
-	# 	nodeVersion => "v0.10.10",
-	# }
+		nodeVersion => "0.10.10",
+		gitUri			=> "https://github.com/brettswift/uptime.git",
+	}
 }
 

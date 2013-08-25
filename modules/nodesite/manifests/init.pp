@@ -2,12 +2,33 @@
 
 
 class nodesite (
-    $gitUri = {},
-    $nodeVersion = {},
+    $gitUri 			= {},
+    $nodeVersion 	= {},
+    $fileToRun 		= {},
 ){
 
-	include nodejs
+	# include nodejs
 
+	include nodesite::packages
+	include nodesite::project
+
+	class { 'nvm_nodejs':
+  	user    => 'vagrant',
+  	version => $nodeVersion,
+	}
+
+	info("##### node path: $nvm_nodejs::NODE_PATH")
+
+
+	class {'nodesite::project':
+			gitUri 			=> $gitUri,
+			fileToRun 	=> $fileToRun,
+	}
 	
-     
+  
+  Class['nodesite::packages'] ->
+  Class['nodesite::npm'] ->
+  Class['nvm_nodejs'] -> 
+  Class['nodesite::project']
+
 }

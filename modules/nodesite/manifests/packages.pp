@@ -1,4 +1,4 @@
-class nodejs::packages{
+class nodesite::packages{
   package{"make":
     ensure => latest,
   }
