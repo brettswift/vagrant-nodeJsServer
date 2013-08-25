@@ -1,4 +1,4 @@
-class nodesite::install {
+class nvm::install {
 
 	file { "/tmp/nvmModule":
 		ensure => directory,
@@ -6,7 +6,7 @@ class nodesite::install {
 
 	file { "/tmp/nvmModule/install_nvm.sh":
 		ensure => file,
-		source => "puppet:///modules/nodesite/install_nvm.sh",
+		source => "puppet:///modules/nvm/install_nvm.sh",
 	}
 
 	exec { "nvm install":

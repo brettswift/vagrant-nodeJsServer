@@ -1,3 +1,3 @@
 class nvm {
-		Class['nvm::install'] 
+		include nvm::install
 }

@@ -8,10 +8,12 @@ class nodesite (
 ){
 
 	# include nodejs
-
+	include nvm
 	include nodesite::packages
 	include nodesite::project
 
+	class nvm {}
+	
 	class { 'nvm_nodejs':
   	user    => 'vagrant',
   	version => $nodeVersion,
@@ -25,10 +27,8 @@ class nodesite (
 			fileToRun 	=> $fileToRun,
 	}
 	
-  
+  Class['nvm'] -> 
   Class['nodesite::packages'] ->
-  Class['nodesite::npm'] ->
-  Class['nvm_nodejs'] -> 
   Class['nodesite::project']
 
 }
