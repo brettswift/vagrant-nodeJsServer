@@ -3,7 +3,12 @@
 
 node node-server {
 
-	require mongodb 
+	class{ 'mongodb':
+		projectName			=> "uptime",
+		dbName 					=> "brettUptime",
+		dbUser					=> "uptimeUser",
+		dbPass					=> "password",
+	}
   # class {'nvm::install':} -> 
 	class {'nodesite':
 

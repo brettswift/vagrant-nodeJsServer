@@ -1,0 +1,2 @@
+db = connect("localhost:27017/<%= @dbName %>");
+db.addUser( { user: "<%= @dbUser %>", pwd: "<%= @dbPass %>", roles: ["readWrite"] } )
