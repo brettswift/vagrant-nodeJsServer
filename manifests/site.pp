@@ -20,7 +20,7 @@ node node-server_old {
 
 node node-server {
 
-
+	class {'nvm':} -> 
 	class {'nodesite':
 
 		nodeVersion => "0.10.10",

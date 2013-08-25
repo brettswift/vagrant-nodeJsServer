@@ -1,6 +1,7 @@
 class nodesite::project(
-		$gitUri 	 = {},
-		$fileToRun = 'app.js',
+		$gitUri 	 		= {},
+		$fileToRun 		= 'app.js',
+		$nodeVersion 	= {},
 	){
 
 	$projectDir = "/tmp/gitProjects"
@@ -9,12 +10,11 @@ class nodesite::project(
 	$projectNameDirty = regsubst($gitUri, '^(.*[\\\/])', '')
 	$projectName = regsubst($projectNameDirty, '.git', '')
 
-	info("##### ---------------->>> project name:    $projectName")
-
-	# class { 'nvm_nodejs':
- #  	user    => 'vagrant',
- #  	version => $nodeVersion,
-	# }
+	
+	class { 'nvm_nodejs':
+  	user    => 'vagrant',
+  	version => $nodeVersion,
+	}
 
 	file { "/tmp/gitProjects":
 		ensure => directory,
@@ -32,14 +32,19 @@ class nodesite::project(
 	}
 
 	exec { "runProject":
-		command => "/usr/bin/ls",
+		command => "/bin/ls",
 		# command => "$nvm_nodejs::NODE_EXEC $fileToRun",
-	# 	cwd			=> "$projectDir/$projectName",
+		# cwd			=> "$projectDir/$projectName",
 	}
 
+	Class['nvm_nodejs'] -> 
 	File['/tmp/gitProjects'] -> 
 	Exec['cloneProject'] -> 
 	Exec['pullProject'] -> 
 	Exec['runProject']
+	
+	info("##### ---------------->>> git URI:    $gitUri")
+	info("##### ---------------->>> project name:    $projectName")
+	info("node exe: $nvm_nodejs::NODE_EXEC")
 
 }
