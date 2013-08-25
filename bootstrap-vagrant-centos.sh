@@ -46,8 +46,9 @@ else
 	echo "puppet already installed"
 fi
 
-echo "$(install_puppet_module_if_required proletaryo-nvm_nodejs)"
-echo "$(install_puppet_module_if_required puppetlabs-stdlib)"
+# example usage:  (These have been moved to the nvm module)
+# echo "$(install_puppet_module_if_required proletaryo-nvm_nodejs)"
+# echo "$(install_puppet_module_if_required puppetlabs-stdlib)"
 
 
 

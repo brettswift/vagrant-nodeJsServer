@@ -11,14 +11,18 @@ class nodejs::nvm{
     cwd     => "/tmp",
   }
 
-  file { '/tmp/install.sh':
+  file { "/tmp/nvm":
+    ensure => directory,
+  }
+
+  file { '/tmp/nvm/install.sh':
     ensure  => file,
     mode    => '0755',
   }
 
   exec { 'nvm install':
-    command => "/bin/bash /tmp/install.sh",
-    # user => root,
+    command     => "/bin/bash /tmp/install.sh",
+    cwd         => "/tmp/nvm",
     refreshonly => true,
   }
 
@@ -28,6 +32,7 @@ class nodejs::nvm{
 
   Package['curl'] -> 
   Exec['get nvm installer'] -> 
-  File['/tmp/install.sh'] -> 
+  File['/tmp/nvm'] -> 
+  File['/tmp/nvm/install.sh'] -> 
   Exec['nvm install'] -> Notify['done']
 }

@@ -1,7 +1,7 @@
 
 # Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
 
-node node-server {
+node node-server_old {
 	include nodejs
 	
 	# https://forge.puppetlabs.com/proletaryo/nvm_nodejs
@@ -18,4 +18,12 @@ node node-server {
 
 }
 
+node node-server {
+
+
+	# class {'nodesite':
+
+	# 	nodeVersion => "v0.10.10",
+	# }
+}
 
