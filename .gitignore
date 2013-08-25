@@ -45,3 +45,6 @@ sftp-config*.json
 ### Vagrant ###
 .vagrant/
 
+### Graphviz ###
+graphs/
+

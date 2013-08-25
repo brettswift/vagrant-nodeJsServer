@@ -1,8 +1,10 @@
 class nodesite::project(
 		$gitUri 	 		= {},
+		$gitBranch		= 'master',
 		$fileToRun 		= 'app.js',
 		$nodeVersion 	= {},
 	){
+	# require nodesite::nvm
 
 	$projectDir = "/tmp/gitProjects"
 
@@ -26,8 +28,14 @@ class nodesite::project(
 		creates => "/tmp/gitProjects/$projectName.log",
 	}
 
+	exec { "gitBranch":
+		command => "/usr/bin/git checkout $gitBranch",
+		cwd			=> "/tmp/gitProjects/$projectName",
+		# TODO: notify npm purge exec.
+	}
+
 	exec { "pullProject":
-		command => "/usr/bin/git pull origin master",
+		command => "/usr/bin/git pull origin $gitBranch",
 		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
@@ -36,14 +44,16 @@ class nodesite::project(
 		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
+	# TODO: change to service - create init.d service template
 	exec { "runProject":
-		command => "$nvm_nodejs::NODE_EXEC $fileToRun",
+		command => "$nvm_nodejs::NODE_EXEC $fileToRun &",
 		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
-	Class['nvm_nodejs'] -> 
+ 	Class['nvm_nodejs'] -> 
 	File['/tmp/gitProjects'] -> 
 	Exec['cloneProject'] -> 
+	Exec['gitBranch'] -> 
 	Exec['pullProject'] -> 
 	Exec['npmInstall'] -> 
 	Exec['runProject']
