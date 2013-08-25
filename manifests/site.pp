@@ -7,7 +7,7 @@ node node-server {
 	# https://forge.puppetlabs.com/proletaryo/nvm_nodejs
 	class { 'nvm_nodejs':
   	user    => 'vagrant',
-  	version => '0.8.22',
+  	version => '0.8.23',
 	}
 # $nvm_nodejs::NODE_PATH : path to the bin directory
 # $nvm_nodejs::NODE_EXEC : full executable path of node engine
