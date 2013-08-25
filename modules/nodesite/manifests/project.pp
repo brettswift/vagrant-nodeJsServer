@@ -6,7 +6,7 @@ class nodesite::project(
 
 	$projectDir = "/tmp/gitProjects"
 
-	# TODO: regex to get project name
+	# regex to get project name, used in folder
 	$projectNameDirty = regsubst($gitUri, '^(.*[\\\/])', '')
 	$projectName = regsubst($projectNameDirty, '.git', '')
 
@@ -31,18 +31,23 @@ class nodesite::project(
 		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
+	exec { "npmInstall":
+		command => "$nvm_nodejs::NPM_EXEC install",
+		cwd			=> "/tmp/gitProjects/$projectName",
+	}
+
 	exec { "runProject":
-		command => "/bin/ls",
-		# command => "$nvm_nodejs::NODE_EXEC $fileToRun",
-		# cwd			=> "$projectDir/$projectName",
+		command => "$nvm_nodejs::NODE_EXEC $fileToRun",
+		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
 	Class['nvm_nodejs'] -> 
 	File['/tmp/gitProjects'] -> 
 	Exec['cloneProject'] -> 
 	Exec['pullProject'] -> 
+	Exec['npmInstall'] -> 
 	Exec['runProject']
-	
+
 	info("##### ---------------->>> git URI:    $gitUri")
 	info("##### ---------------->>> project name:    $projectName")
 	info("node exe: $nvm_nodejs::NODE_EXEC")
