@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
 		end
 
 		# run graphviz - currently you have to provision twice, this seems to run before the puppet provisioner
-		#{}`dot -Tpng graphs/resources.dot -o graphs/resources.png`
+		`dot -Tpng graphs/resources.dot -o graphs/resources.png`
 		# `rm graphs/*.dot`
 
 		nodeserver.vm.provider :virtualbox do |vb|

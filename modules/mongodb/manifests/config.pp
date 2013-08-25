@@ -4,7 +4,8 @@ class mongodb::config(
 		$dbUser				= {},
 		$dbPass 			= {},
 	){
-
+	#TODO: move vars above to params 
+	
 	file { ["/tmp/mongodb/",
 					"/tmp/mongodb/$projectName"]:
 		ensure => directory,

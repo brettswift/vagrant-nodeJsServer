@@ -1,2 +1,4 @@
 db = connect("localhost:27017/<%= @dbName %>");
+// TODO: fix hack of removing user.  Make idempotent instead. 
+db.removeUser("<%= @dbUser %>");
 db.addUser( { user: "<%= @dbUser %>", pwd: "<%= @dbPass %>", roles: ["readWrite"] } )
