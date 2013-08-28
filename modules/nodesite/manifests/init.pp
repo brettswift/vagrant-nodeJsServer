@@ -6,6 +6,7 @@ class nodesite (
     $gitBranch 		= {},
     $nodeVersion 	= {},
     $fileToRun 		= {},
+    $user         = {},
 ){
 
 	# include nodejs
@@ -22,6 +23,7 @@ class nodesite (
 			gitBranch 	=> $gitBranch,
 			fileToRun 	=> $fileToRun,
 			nodeVersion	=> $nodeVersion,
+      user        => $user,
 	}
 	
   # Class['nvm'] -> 
