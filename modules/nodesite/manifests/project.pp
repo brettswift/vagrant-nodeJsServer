@@ -4,6 +4,7 @@ class nodesite::project(
 		$fileToRun 		= 'app.js',
 		$nodeVersion 	= {},
 		$user					= {},
+		$npmProxy			= {},
 	){
 	# require nodesite::nvm
 
@@ -38,6 +39,12 @@ class nodesite::project(
 	exec { "pullProject":
 		command => "/usr/bin/git pull origin $gitBranch",
 		cwd			=> "/tmp/gitProjects/$projectName",
+	}
+
+	exec { "setNpmProxy": 
+		command 		=> "$nvm_nodejs::NPM_EXEC config set https-proxy $npmProxy; $nvm_nodejs::NPM_EXEC config set proxy $npmProxy",
+		user				=> "root",
+		onlyif			=> "/bin/echo $http_proxy",
 	}
 
 	exec { "npmInstall":

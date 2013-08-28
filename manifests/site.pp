@@ -37,6 +37,7 @@ node epdashboard {
 		gitBranch		=> "statusCheck",
 		fileToRun 	=> "app.js",
 		user 				=> "prov",
+		npmProxy		=> "wx1.no.cg.lab.nms.mlb.inet:3128",
 	}
 }
 

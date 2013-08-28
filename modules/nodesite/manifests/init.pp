@@ -7,6 +7,7 @@ class nodesite (
     $nodeVersion 	= {},
     $fileToRun 		= {},
     $user         = {},
+    $npmProxy     = {},
 ){
 
 	# include nodejs
