@@ -3,6 +3,7 @@ class nodesite::project(
 		$gitBranch		= 'master',
 		$fileToRun 		= 'app.js',
 		$nodeVersion 	= {},
+		$user					= {},
 	){
 	# require nodesite::nvm
 
@@ -14,7 +15,7 @@ class nodesite::project(
 
 	
 	class { 'nvm_nodejs':
-  	user    => 'vagrant',
+  	user    => $user,
   	version => $nodeVersion,
 	}
 
