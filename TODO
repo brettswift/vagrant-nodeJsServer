@@ -1,0 +1,10 @@
++ ---------------------------------------------------------------------------- +
+| TODOS @ Wednesday 02 April 2014 09:34                                        |
+| 17 files scanned                                                             |
++ ---------------------------------------------------------------------------- +
+
+## TODO (4)
+1. init.pp:3  move defaults to nodesite.params, and load defaults
+2. init.pp:21  include plain class, and pull variables instead of pushing.  use module_data / hiera? 
+3. project.pp:36  notify npm purge exec.
+4. project.pp:55  change to service - create init.d service template

@@ -52,7 +52,7 @@ class nodesite::project(
 		cwd			=> "/tmp/gitProjects/$projectName",
 	}
 
-	# TODO: change to service - create init.d service template
+	# TODO: change to service - create init.d service template? use "forever"? 
 	exec { "runProject":
 		command => "$nvm_nodejs::NODE_EXEC $fileToRun &",
 		cwd			=> "/tmp/gitProjects/$projectName",

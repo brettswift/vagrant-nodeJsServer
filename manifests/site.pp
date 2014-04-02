@@ -1,7 +1,7 @@
 
 # Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
 
-node node-server {
+node old_server {
 
 	class{ 'mongodb':
 		projectName			=> "uptime",
@@ -21,14 +21,21 @@ node node-server {
 }
 
 
-node epdashboard {
+node nodeserver {
 
-	class{ 'mongodb':
-		projectName			=> "uptime",
-		dbName 					=> "brettUptime",
-		dbUser					=> "uptimeUser",
-		dbPass					=> "password",
+
+	class {'mongodb::globals':
+	  manage_package_repo => true,
+	}->
+	class {'mongodb::server': 
+		auth => true,
+	}->
+	mongodb::db { 'uptime':
+	  user          	=> 'uptimeUser',
+	  password 				=> 'password',
+	  # password_hash => 'a15fbfca5e3a758be80ceaf42458bcd8',
 	}
+ 	
 
 	class {'nodesite':
 
@@ -37,7 +44,18 @@ node epdashboard {
 		gitBranch		=> "statusCheck",
 		fileToRun 	=> "app.js",
 		user 				=> "prov",
-		npmProxy		=> "wx1.no.cg.lab.nms.mlb.inet:3128",
+		# npmProxy		=> "wx1.no.cg.lab.nms.mlb.inet:3128",
 	}
+
+	Class['mongodb::server']-> 
+	Class['nodesite']->
+	info("node exe: $nvm_nodejs::NODE_EXEC")
+	info("npm exec: $nvm_nodejs::NPM_EXEC")
+	info("node path: $nvm_nodejs::NODE_PATH")
+
+
+
+
+	
 }
 
