@@ -1,6 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+Vagrant.require_version ">= 1.4.0"
+
+unless Vagrant.has_plugin?("vagrant-librarian-puppet") then
+	raise "please run: `vagrant plugin install vagrant-librarian-puppet` as this plugin is required."
+end
+
 Vagrant.configure("2") do |config|
 	config.vm.define :nodeserver do |nodeserver|
 
