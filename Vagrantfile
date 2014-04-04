@@ -18,17 +18,9 @@ Vagrant.configure("2") do |config|
 		nodeserver.vm.network :private_network, ip: "33.33.33.10"
     nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
-		#bridged
-		# nodeserver.vm.network :public_network
-
-		#plugin is currently broken
-		# value = `vagrant snapshot list`
-		# puts value
-
 		nodeserver.vm.provision :shell, :path => "bootstrap-vagrant-centos.sh"
 		nodeserver.vm.provision :shell, :path => "bootstrap_librarian.sh"
 		# nodeserver.vm.provision :shell, :inline => "rm /vagrant/graphs/*.dot"
-# puppet apply -vv --modulepath='site:modules' manifests/site.pp
 	
 		#BROKEN - with librarian this must run from the shell script
 		# nodeserver.vm.provision :puppet do |puppet|
@@ -38,15 +30,11 @@ Vagrant.configure("2") do |config|
 		# 	puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
 		# end
 
-		# run graphviz - currently you have to provision twice, this seems to run before the puppet provisioner
-		# `dot -Tpng graphs/resources.dot -o graphs/resources.png`
-		# `rm graphs/*.dot`
-
 		nodeserver.vm.provider :virtualbox do |vb|
 			vb.customize [
 				'modifyvm', :id,
 				'--name', hostname,
-				'--memory', 1024
+				'--memory', 512
 			]
 		end
 	end

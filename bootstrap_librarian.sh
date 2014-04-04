@@ -26,4 +26,4 @@ else
 fi
 
 # now we run puppet
-puppet apply -vv --debug --trace  --modulepath=$PUPPET_DIR/modules:$PUPPET_DIR/site $PUPPET_DIR/manifests/site.pp
+puppet apply -vv --modulepath=$PUPPET_DIR/modules:$PUPPET_DIR/site $PUPPET_DIR/manifests/site.pp
