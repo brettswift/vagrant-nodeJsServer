@@ -10,15 +10,9 @@ class nodesite (
     $npmProxy     = {},
 ){
 
-	# include nodejs
-	 require nvm
-	# require nvm::install
-	# class{'nvm::install':}
-
 	include nodesite::packages
-	# include nodesite::project
-
-	# TODO: use require before class instead of dependencies below? 
+  
+	# TODO: include plain class, and pull variables instead of pushing.  use module_data / hiera? 
 	class {'nodesite::project':
 			gitUri 			=> $gitUri,
 			gitBranch 	=> $gitBranch,

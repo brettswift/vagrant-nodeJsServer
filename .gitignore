@@ -48,3 +48,6 @@ sftp-config*.json
 ### Graphviz ###
 graphs/
 
+### Puppet Librarian ###
+modules
+.tmp
