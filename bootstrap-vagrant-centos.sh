@@ -47,9 +47,9 @@ else
 fi
 
 # example usage:  (These have been moved to the nvm module)
-echo "$(install_puppet_module_if_required puppetlabs-stdlib)"
-echo "$(install_puppet_module_if_required puppetlabs-mongodb)"
-echo "$(install_puppet_module_if_required proletaryo-nvm_nodejs)"
+# echo "$(install_puppet_module_if_required puppetlabs-stdlib)"
+# echo "$(install_puppet_module_if_required puppetlabs-mongodb)"
+# echo "$(install_puppet_module_if_required proletaryo-nvm_nodejs)"
 
 
 

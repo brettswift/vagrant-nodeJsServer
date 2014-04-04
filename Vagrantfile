@@ -26,15 +26,17 @@ Vagrant.configure("2") do |config|
 		# puts value
 
 		nodeserver.vm.provision :shell, :path => "bootstrap-vagrant-centos.sh"
+		nodeserver.vm.provision :shell, :path => "bootstrap_librarian.sh"
 		# nodeserver.vm.provision :shell, :inline => "rm /vagrant/graphs/*.dot"
-
-
-		nodeserver.vm.provision :puppet do |puppet|
-			puppet.manifests_path = "manifests"
-			puppet.module_path 		= ["modules", "site"]
-			puppet.manifest_file  = "site.pp"
-			# puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
-		end
+# puppet apply -vv --modulepath='site:modules' manifests/site.pp
+	
+		#BROKEN - with librarian this must run from the shell script
+		# nodeserver.vm.provision :puppet do |puppet|
+		# 	puppet.manifests_path = "manifests"
+		# 	puppet.manifest_file  = "site.pp"
+		# 	puppet.module_path 		= ['site/','modules/']
+		# 	puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
+		# end
 
 		# run graphviz - currently you have to provision twice, this seems to run before the puppet provisioner
 		# `dot -Tpng graphs/resources.dot -o graphs/resources.png`
