@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
 			puppet.manifests_path = "manifests"
 			puppet.module_path 		= ["modules", "site"]
 			puppet.manifest_file  = "site.pp"
-			puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
+			# puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
 		end
 
 		# run graphviz - currently you have to provision twice, this seems to run before the puppet provisioner
