@@ -26,7 +26,7 @@ node nodeserver {
 	class {'nodesite':
 		node_version => "0.10.26",
 		git_uri			=> "https://github.com/brettswift/uptime.git",
-		git_branch		=> "statusCheck",
+		git_branch		=> "versionChecks",
 		file_to_run 	=> "app.js",
 		user 				=> $project,
 		# npm_proxy		=> "wx1.no.cg.lab.nms.mlb.inet:3128",

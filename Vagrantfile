@@ -19,9 +19,9 @@ Vagrant.configure("2") do |config|
 		nodeserver.vm.network :private_network, ip: "33.33.33.10"
     nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
-		nodeserver.vm.provision :shell, :path => "bootstrap-vagrant-centos.sh"
-		nodeserver.vm.provision :shell, :path => "bootstrap_librarian.sh"
-		# nodeserver.vm.provision :shell, :inline => "rm /vagrant/graphs/*.dot"
+		nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
+		nodeserver.vm.provision :shell, :path => "./shell/bootstrap_librarian.sh"
+		nodeserver.vm.provision :shell, :path => "./shell/run_puppet.sh"
 	
 		#BROKEN - with librarian this must run from the shell script
 		# nodeserver.vm.provision :puppet do |puppet|
