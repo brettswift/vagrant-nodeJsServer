@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
 
 		# host only
 		nodeserver.vm.network :private_network, ip: "33.33.33.10"
-    nodeserver.vm.network :forwarded_port, guest: 8082, host: 8083
+    nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
 		nodeserver.vm.provision :shell, :path => "bootstrap-vagrant-centos.sh"
 		nodeserver.vm.provision :shell, :path => "bootstrap_librarian.sh"
