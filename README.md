@@ -26,3 +26,7 @@ Project Structure
 * `shell` bootstrap provisioners. 
 		* so you can use a clean base vagrant box that doesn't have puppet if you want
 
+Known Bugs
+----------
+upstart is configured for puppet 3.5 only, and is currently broken.  pre puppet 3.5 works with system V startup scripts.
+
