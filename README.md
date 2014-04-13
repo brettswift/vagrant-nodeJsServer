@@ -16,7 +16,7 @@ Run: `vagrant up` and you will have a running nodejs application in under 4 minu
 
 By default, this is conifigured to run my feature branch of [Uptime](http://redotheweb.com/uptime) hosted on github https://github.com/brettswift/uptime
 
-
+Git deploys are also enabled by default.  The nodesite module will check for upstream changes on each puppet run.  If there are any it will run a `git pull`, `npm prune`, `npm install` and restart the service. 
 
 Project Structure
 -----------------
@@ -24,5 +24,5 @@ Project Structure
 * `site` local module code
 * `modules` installed by librarian-puppet
 * `shell` bootstrap provisioners. 
-		* capable of running a base vagrant box without puppet
+		* so you can use a clean base vagrant box that doesn't have puppet if you want
 

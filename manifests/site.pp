@@ -1,6 +1,6 @@
 
 # Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
-
+Exec { path => [ "/bin", "/sbin" , "/usr/bin", "/usr/sbin" ] }
 
 node nodeserver {
 
@@ -23,6 +23,8 @@ node nodeserver {
 	}
  	
 
+	# TODO: when nodesite is pulled into it's own repo, introduce roles/profiles and put node_config
+	# into a file resource (ie production.yaml)
 	class {'nodesite':
 		node_version 	=> "v0.10.26",
 		git_uri				=> "https://github.com/brettswift/uptime.git",
