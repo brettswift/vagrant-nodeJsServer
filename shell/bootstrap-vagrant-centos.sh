@@ -28,7 +28,7 @@ function install_puppet_module_if_required {
 }
 ##############################
 	
-	echo "running bootstrap.  Installing puppet " #, git, nvm . . . "
+	echo "running bootstrap.  Installing puppet "
 
 ### ensure stuff is installed
 #  git is probably not required. 

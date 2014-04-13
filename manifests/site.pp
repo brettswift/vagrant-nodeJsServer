@@ -24,11 +24,12 @@ node nodeserver {
  	
 
 	class {'nodesite':
-		node_version => "0.10.26",
-		git_uri			=> "https://github.com/brettswift/uptime.git",
+		node_version 	=> "v0.10.26",
+		git_uri				=> "https://github.com/brettswift/uptime.git",
 		git_branch		=> "versionChecks",
 		file_to_run 	=> "app.js",
-		user 				=> $project,
+		user 					=> "${project}",
+		node_params   => "NODE_CONFIG='{\"mongodb\":{\"database\":\"uptimeStatusUpdate\", \"user\":\"uptimeUser\", \"password\":\"password\"}}'"
 	}
 
 	Class['mongodb::server']-> 

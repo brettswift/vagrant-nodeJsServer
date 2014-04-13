@@ -20,7 +20,7 @@ YUM=/usr/bin/yum
 
 if [ `gem query --local | grep librarian-puppet | wc -l` -eq 0 ]; then
   gem install librarian-puppet --no-ri --no-rdoc
-  echo 'running librarian-puppet install... please be patient, this could take a few min. '
+  echo 'running librarian-puppet install... please be patient while I fill up your ./modules directory.'
   cd $PUPPET_DIR && librarian-puppet install --clean
 else
 	echo 'running librarian-puppet update'

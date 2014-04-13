@@ -26,4 +26,3 @@ Project Structure
 * `shell` bootstrap provisioners. 
 		* capable of running a base vagrant box without puppet
 
-

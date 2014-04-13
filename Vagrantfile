@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 			vb.customize [
 				'modifyvm', :id,
 				'--name', hostname,
-				'--memory', 512
+				'--memory', 1024
 			]
 		end
 	end
