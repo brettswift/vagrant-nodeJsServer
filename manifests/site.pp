@@ -31,7 +31,7 @@ node nodeserver {
 		git_branch		=> "versionChecks",
 		file_to_run 	=> "app.js",
 		user 					=> "${project}",
-		node_params   => "NODE_CONFIG='{\"mongodb\":{\"database\":\"uptimeStatusUpdate\", \"user\":\"uptimeUser\", \"password\":\"password\"}}'"
+		node_params   => "NODE_CONFIG={\"mongodb\":{\"database\":\"${db_name}\", \"user\":\"${db_user}\", \"password\":\"${db_password}\"}}"
 	}
 
 	Class['mongodb::server']-> 
