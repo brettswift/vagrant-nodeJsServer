@@ -20,10 +20,11 @@ Vagrant.configure("2") do |config|
     nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
 		nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
-		nodeserver.vm.provision :shell, :path => "./shell/bootstrap_librarian.sh"
+		nodeserver.vm.provision :shell, :path => "./shell/bootstrap_r10k.sh"
+		# nodeserver.vm.provision :shell, :path => "./shell/bootstrap_librarian.sh"
 		nodeserver.vm.provision :shell, :path => "./shell/run_puppet.sh"
 	
-		#BROKEN - with librarian this must run from the shell script
+		#BROKEN - with r10k this must run from the shell script.. retest to get it working. 
 		# nodeserver.vm.provision :puppet do |puppet|
 		# 	puppet.manifests_path = "manifests"
 		# 	puppet.manifest_file  = "site.pp"
