@@ -3,9 +3,9 @@
 Exec { path => [ "/bin", "/sbin" , "/usr/bin", "/usr/sbin" ] }
 
 node nodeserver {
-
+	$featureBranch = 'versionChecks'
 	$project = 'uptime'
-	$db_name = 'uptimeStatusUpdate'
+	$db_name = "uptimeVersionChecks"
 	$db_user = 'uptimeUser'
 	$db_password = 'password'
 
@@ -28,7 +28,7 @@ node nodeserver {
 	class {'nodesite':
 		node_version 	=> "v0.10.26",
 		git_uri				=> "https://github.com/brettswift/uptime.git",
-		git_branch		=> "versionChecks",
+		git_branch		=> $featureBranch,
 		file_to_run 	=> "app.js",
 		user 					=> "${project}",
 		node_params   => "NODE_CONFIG={\"mongodb\":{\"database\":\"${db_name}\", \"user\":\"${db_user}\", \"password\":\"${db_password}\"}}"
