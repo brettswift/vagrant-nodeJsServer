@@ -1,3 +1,0 @@
-#!/bin/sh
-
-[ `git log --pretty=%H ...refs/heads/<%=@git_branch%>^` == `git ls-remote origin -h refs/heads/<%=@git_branch%> | cut -f1` ]

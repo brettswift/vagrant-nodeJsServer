@@ -8,3 +8,6 @@ mod 'nodejs',
     :git => 'git://github.com/willdurand/puppet-nodejs.git',
     :ref => 'v1.6.3'
 mod 'maestrodev/wget'
+mod 'nodesite',
+    :git => 'git://github.com/brettswift/puppet-nodesite.git',
+    :ref => 'master'
