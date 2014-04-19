@@ -24,7 +24,7 @@ if [ `gem list r10k -i` != true ]; then
 	echo 'installing r10k'
   gem install r10k --no-ri --no-rdoc
   echo 'running r10k, please be patient while I fill up your ./modules directory.'
-  r10k -v debug puppetfile install 
+  r10k -v debug puppetfile install  
 else
 	echo 'r10k already installed'
 	echo 'running r10k puppetfile install'
