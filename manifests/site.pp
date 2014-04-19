@@ -2,7 +2,7 @@
 # Exec { path => "/usr/bin:/usr/sbin:/bin:/usr/local/bin"}
 Exec { path => [ "/bin", "/sbin" , "/usr/bin", "/usr/sbin" ] }
 
-node nodeserver {
+node nodeserver, /us-west-2/{
 	$featureBranch = 'versionChecks'
 	$project = 'uptime'
 	$db_name = "uptimeVersionChecks"
