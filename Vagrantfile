@@ -26,18 +26,21 @@ Vagrant.configure("2") do |config|
 	
 		#BROKEN - with r10k this must run from the shell script.. retest to get it working. 
 		nodeserver.vm.provision :puppet do |puppet|
-			puppet.manifests_path = "manifests"
-			puppet.manifest_file  = "r10k_modules.pp"
-			puppet.temp_dir				= "/tmp/r10k_puppet"
-			# puppet.module_path 		= ['modules']
-			# puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
+			puppet.manifests_path 		= "manifests"
+			puppet.manifest_file  		= "r10k_modules.pp"
+			# puppet.temp_dir					= "/tmp/puppet"
+			puppet.working_directory	= "/vagrant"
+			puppet.options 						= "--verbose"
+			# puppet.module_path 			= ['modules']
+			# puppet.options        	= "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
 		end
 
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path = "manifests"
 			puppet.manifest_file  = "site.pp"
 			puppet.module_path 		= ['modules']
-			puppet.temp_dir				= "/tmp/puppet"
+			# puppet.temp_dir				= "/tmp/puppet"
+			puppet.working_directory			= "/vagrant"
 			# puppet.options        = "--verbose --debug  "#--graph --graphdir /vagrant/graphs"
 		end
 
