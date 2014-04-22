@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 1.4.0"
+Vagrant.require_version ">= 1.5.0"
 
 # unless Vagrant.has_plugin?("vagrant-librarian-puppet") then
 # 	raise "please run: `vagrant plugin install vagrant-librarian-puppet` as this plugin is required."
@@ -9,8 +9,10 @@ Vagrant.require_version ">= 1.4.0"
 
 Vagrant.configure("2") do |config|
 	config.vm.define :nodeserver do |nodeserver|
-		nodeserver.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
-		nodeserver.vm.box 		 = "dummy" #used for cloud provisioners
+
+		#virtualbox (cloud providers redefine this)
+		nodeserver.vm.box      = "centos-65-x64-virtualbox-puppet"
+		nodeserver.vm.box_url  = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box"
 
 		hostname               = "nodeserver"
 		nodeserver.vm.hostname = hostname
@@ -29,16 +31,13 @@ Vagrant.configure("2") do |config|
 			puppet.manifest_file          = "site.pp"
 			puppet.module_path 		        = 'modules'
 			puppet.working_directory			= "/vagrant"
-			puppet.options        = "--verbose"#--graph --graphdir /vagrant/graphs"
+			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
 		end
 
 
 		################################
 		########  Providers ############
 		nodeserver.vm.provider :virtualbox do |vb|
-			
-			nodeserver.vm.box      = "centos-65-x64-virtualbox-puppet"
-			nodeserver.vm.box_url  = "http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box"
 			nodeserver.vm.network :private_network, ip: "33.33.33.10"
 	    nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
@@ -52,10 +51,13 @@ Vagrant.configure("2") do |config|
 
 		nodeserver.vm.provider :aws do |aws, override|
 
+			override.vm.box 			= "aws" #used for cloud provisioners
+			override.vm.box_url 	= "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+
 		  config.ssh.pty                = true
 			aws.keypair_name              = "vagrant"
-			aws.access_key_id             = "#{ENV['AWS_ACCESS_KEY']}"  
-			aws.secret_access_key         = "#{ENV['AWS_SECRET_KEY']}"  
+			aws.access_key_id             = "#{ENV['AWS_ACCESS_KEY_ID']}"  
+			aws.secret_access_key         = "#{ENV['AWS_SECRET_ACCESS_KEY']}"  
 			# aws.ami                     = "ami-043a5034" # amazon linux 64bit. puppet 2.7 :( 
 			aws.ami                       = "ami-b158c981" #centos 64 bit minimal:  http://goo.gl/tqeOty
 			aws.region                    = "us-west-2"
@@ -67,6 +69,21 @@ Vagrant.configure("2") do |config|
 																				'Name' => 'Uptime'
 																			}
 		end
+
+    config.vm.provider :digital_ocean do |provider, override|
+	    override.ssh.private_key_path = '~/.ssh/id_rsa'
+	    override.vm.box               = 'digital_ocean'
+	    override.vm.box_url           = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+	    provider.client_id            = '#{ENV['DIGITAL_OCEAN_CLIENT_ID']}'
+	    provider.api_key              = '#{ENV['DIGITAL_OCEAN_API_KEY']}'
+	    provider.image								= 'CentOS 6.5 x64'
+
+	  end
+
+	  # think these are for aws only? 
+    config.ssh.username = 'vagrant' # the one used to create the VM
+    config.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 
 	end
 end

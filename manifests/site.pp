@@ -31,7 +31,7 @@ node nodeserver, /us-west-2/{
 		git_branch		=> $featureBranch,
 		file_to_run 	=> "app.js",
 		user 					=> "${project}",
-		node_params   => "NODE_CONFIG={\"mongodb\":{\"database\":\"${db_name}\", \"user\":\"${db_user}\", \"password\":\"${db_password}\"}}"
+		node_params   => "NODE_CONFIG={\"mongodb\":{\"database\":${db_name}, \"user\":${db_user}, \"password\":${db_password}}}"
 	}
 
 	Class['mongodb::server']-> 
