@@ -68,6 +68,10 @@ Vagrant.configure("2") do |config|
 			aws.tags                      = {
 																				'Name' => 'Uptime'
 																			}
+
+	  # think these are for aws only? 
+	    override.ssh.username = 'vagrant' # the one used to create the VM
+	    override.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 		end
 
     config.vm.provider :digital_ocean do |provider, override|
@@ -75,15 +79,12 @@ Vagrant.configure("2") do |config|
 	    override.vm.box               = 'digital_ocean'
 	    override.vm.box_url           = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-	    provider.client_id            = '#{ENV['DIGITAL_OCEAN_CLIENT_ID']}'
-	    provider.api_key              = '#{ENV['DIGITAL_OCEAN_API_KEY']}'
+	    provider.client_id            = "#{ENV['DIGITAL_OCEAN_CLIENT_ID']}"
+	    provider.api_key              = "#{ENV['DIGITAL_OCEAN_API_KEY']}"
 	    provider.image								= 'CentOS 6.5 x64'
 
 	  end
 
-	  # think these are for aws only? 
-    config.ssh.username = 'vagrant' # the one used to create the VM
-    config.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 
 	end
 end
