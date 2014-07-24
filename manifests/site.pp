@@ -11,9 +11,10 @@ node nodeserver, /us-west-2/{
 
 	# TODO move to role/profile
 	class {'mongodb::globals':
-	  manage_package_repo => true,
+	  manage_package_repo 		=> true,
+	  server_package_name			=> "mongodb-org-server",
 	}->
-	class {'mongodb::server': 
+	class {'mongodb::server':
 		auth => true,
 	}->
 	mongodb::db { "${db_name}":
@@ -21,7 +22,7 @@ node nodeserver, /us-west-2/{
 	  password 				=> "${db_password}",
 	  # password_hash => 'a15fbfca5e3a758be80ceaf42458bcd8',
 	}
- 	
+
 
 	# TODO: when nodesite is pulled into it's own repo, introduce roles/profiles and put node_config
 	# into a file resource (ie production.yaml)
@@ -34,7 +35,7 @@ node nodeserver, /us-west-2/{
 		node_params   => "NODE_CONFIG={\"mongodb\":{\"database\":${db_name}, \"user\":${db_user}, \"password\":${db_password}}}"
 	}
 
-	Class['mongodb::server']-> 
+	Class['mongodb::server']->
 	Class['nodesite']
 
 }
