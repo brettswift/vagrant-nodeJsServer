@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 1.5.0"
+Vagrant.require_version ">= 1.6.0"
 
 # unless Vagrant.has_plugin?("vagrant-librarian-puppet") then
 # 	raise "please run: `vagrant plugin install vagrant-librarian-puppet` as this plugin is required."
@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
 		hostname               = "nodeserver"
 		nodeserver.vm.hostname = hostname
 
-		nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
+		# nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
 	
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path 		= "manifests"
@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
 
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path         = "manifests"
-			puppet.manifest_file          = "site.pp"
+			puppet.manifest_file          = "test.pp"
 			puppet.module_path 		        = 'modules'
 			puppet.working_directory			= "/vagrant"
 			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 			override.vm.box 			= "aws" #used for cloud provisioners
 			override.vm.box_url 	= "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
 
-		  config.ssh.pty                = true
+		  override.ssh.pty                = true
 			aws.keypair_name              = "vagrant"
 			aws.access_key_id             = "#{ENV['AWS_ACCESS_KEY_ID']}"  
 			aws.secret_access_key         = "#{ENV['AWS_SECRET_ACCESS_KEY']}"  
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
 	    override.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 		end
 
-    config.vm.provider :digital_ocean do |provider, override|
+    nodeserver.vm.provider :digital_ocean do |provider, override|
 	    override.ssh.private_key_path = '~/.ssh/id_rsa'
 	    override.vm.box               = 'digital_ocean'
 	    override.vm.box_url           = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
