@@ -1,8 +1,9 @@
-class profiles::mongodb {
+class profiles::mongodb (
+    $db_name          = undef,
+    $db_user          = undef,
+    $db_password      = undef,
+){
 
-  $db_name = "uptimeVersionChecks"
-  $db_user = 'uptimeUser'
-  $db_password = 'password'
 
   class {'mongodb::globals':
     manage_package_repo     => true,

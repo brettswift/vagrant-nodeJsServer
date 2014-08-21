@@ -13,6 +13,7 @@ package { "git":
 	ensure 		=> latest,
 }
 
+notify {"starting r10k deployment": }->
 Package['git']->
 Package['r10k']->
 Exec['r10k']
