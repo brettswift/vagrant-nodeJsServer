@@ -19,6 +19,9 @@ Vagrant.configure("2") do |config|
 
 		# nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
 	
+		nodeserver.vm.network :private_network, ip: "33.33.33.10"
+		nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
+ 
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path 		= "manifests"
 			puppet.manifest_file  		= "r10k_modules.pp"
@@ -29,7 +32,7 @@ Vagrant.configure("2") do |config|
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path         = "manifests"
 			puppet.manifest_file          = "test.pp"
-			puppet.module_path 		        = 'modules'
+			puppet.module_path 		        = ['modules','modules_site']
 			puppet.working_directory			= "/vagrant"
 			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
 		end
