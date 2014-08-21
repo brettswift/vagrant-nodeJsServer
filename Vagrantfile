@@ -3,12 +3,8 @@
 
 Vagrant.require_version ">= 1.5.0"
 
-# unless Vagrant.has_plugin?("vagrant-librarian-puppet") then
-# 	raise "please run: `vagrant plugin install vagrant-librarian-puppet` as this plugin is required."
-# end
-
 Vagrant.configure("2") do |config|
-	config.vm.define :web_server do |nodeserver|
+	config.vm.define :web do |nodeserver|
 
 		#virtualbox (cloud providers redefine this)
 		nodeserver.vm.box      = "centos-65-x64-virtualbox-puppet"
