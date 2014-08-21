@@ -1,7 +1,10 @@
 forge 'http://forge.puppetlabs.com'
 
 mod 'puppetlabs/stdlib', '3.2.1'
-mod 'puppetlabs/mongodb' , '0.8.0'
+#mod 'puppetlabs/mongodb' , '0.8.0'
+mod 'mongodb',
+    :git => 'git://github.com/puppetlabs/puppetlabs-mongodb.git',
+    :ref => 'master'
 mod 'puppetlabs/apt' , '1.5.1'
 mod 'example42/puppi', '2.1.9'
 mod 'example42/yum', '2.1.15'
