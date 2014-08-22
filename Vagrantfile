@@ -30,11 +30,8 @@ Vagrant.configure("2") do |config|
 			puppet.manifest_file          = "site.pp"
 			puppet.module_path 		        = ['modules','modules_site']
 			puppet.working_directory			= "/vagrant"
-			puppet.options        				= "--verbose --debug"#--graph --graphdir /vagrant/graphs"
+			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
 		end
-
-		nodeserver.vm.network :private_network, ip: "33.33.33.10"
-    nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
 		################################
 		########  Providers ############

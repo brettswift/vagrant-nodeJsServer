@@ -17,15 +17,14 @@ class profiles::uptime_nodesite
 	$project_name = "uptime"
 	#****
 
-	$node_params="NODE_CONFIG={\"mongodb\":{\"database\":${db_name}, \"user\":${db_user}, \"password\":${db_password}}}"
-
-	class {'profiles::mongodb':
+	class {'profiles::mongo_database':
 	  db_name => $db_name,
 	  db_user => $db_user,
 	  db_password => $db_password,
 	}
-	# TODO: when nodesite is pulled into it's own repo, introduce roles/profiles and put node_config
-	# into a file resource (ie production.yaml)
+
+	# TODO: put node_config into a file resource (ie production.yaml)
+	$node_params="NODE_CONFIG={\"mongodb\":{\"database\":${db_name}, \"user\":${db_user}, \"password\":${db_password}}}"
 	class {'nodesite':
 		node_version 	=> "v0.10.26",
 		git_uri				=> $git_uri,
@@ -35,7 +34,7 @@ class profiles::uptime_nodesite
 		node_params   => $node_params
 	}
 
-	Class['profiles::mongodb']->
+	Class['profiles::mongo_database']->
 	Class['nodesite']
 	
 }
