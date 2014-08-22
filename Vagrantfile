@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 			puppet.manifest_file          = "site.pp"
 			puppet.module_path 		        = ['modules','modules_site']
 			puppet.working_directory			= "/vagrant"
-			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
+			puppet.options        				= "--verbose --trace"#--graph --graphdir /vagrant/graphs"
 		end
 
 		################################
