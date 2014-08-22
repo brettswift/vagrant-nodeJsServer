@@ -27,10 +27,10 @@ Vagrant.configure("2") do |config|
 
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path         = "manifests"
-			puppet.manifest_file          = "test.pp"
+			puppet.manifest_file          = "site.pp"
 			puppet.module_path 		        = ['modules','modules_site']
 			puppet.working_directory			= "/vagrant"
-			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
+			puppet.options        				= "--verbose --debug"#--graph --graphdir /vagrant/graphs"
 		end
 
 		nodeserver.vm.network :private_network, ip: "33.33.33.10"

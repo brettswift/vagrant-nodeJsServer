@@ -7,7 +7,7 @@ class profiles::mongodb (
 
   class {'mongodb::globals':
     manage_package_repo     => true,
-    server_package_name     => "mongodb-org-server",
+    # server_package_name     => "mongodb-org-server",
   }->
   class {'mongodb::server':
     auth => true,
