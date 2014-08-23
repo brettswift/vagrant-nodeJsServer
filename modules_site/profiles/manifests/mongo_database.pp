@@ -17,9 +17,8 @@ class profiles::mongo_database (
   ->
   mongodb::db { "${db_name}":
     user            => "${db_user}",
-    password        => "${db_password}",
-    # password_hash => 'a15fbfca5e3a758be80ceaf42458bcd8',
+    # password        => "${db_password}",
+    password_hash => 'f6f13525912d3b67729f135ce4431413',
   }
-
 
 } 
