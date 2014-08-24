@@ -10,7 +10,7 @@ class profiles::mongo_database (
   }
   ->
   class {'::mongodb::server':
-    auth => true,
+    # auth => true,
   }
   ->
   class {'::mongodb::client': }
@@ -18,7 +18,7 @@ class profiles::mongo_database (
   mongodb::db { "${db_name}":
     user            => "${db_user}",
     password_hash => "${db_password}",
-    roles         => ['readWrite','dbADmin'],
+    roles         => ['readWrite','dbOwner'],
   }
   
 } 

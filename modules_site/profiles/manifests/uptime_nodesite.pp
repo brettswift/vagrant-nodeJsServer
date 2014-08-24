@@ -11,12 +11,13 @@ class profiles::uptime_nodesite
 
 	#**** data until we get hiera enabled
   # $git_branch				= 'bugfix/config_file'
-  $db_name          = "uptimeVersionChecks"
-  $db_user          = 'uptimeUser'
-  $db_password      = 'password'
-	$git_uri          =  "https://github.com/brettswift/uptime.git"
-	# $git_uri        =  "https://github.com/fzaninotto/uptime.git"
-	$project_name     = "uptime"
+  $db_name               = "uptimeVersionChecks"
+  $db_user               = 'uptimeUser'
+  $db_password           = 'password'
+	$git_uri               =  "https://github.com/brettswift/uptime.git"
+	# $git_uri             =  "https://github.com/fzaninotto/uptime.git"
+	$project_name          = "uptime"
+	$db_connection_string  = "mongodb://localhost/uptimeVersionChecks"
 	#****
 
 	class {'profiles::mongo_database':
@@ -30,6 +31,7 @@ class profiles::uptime_nodesite
     "mongodb/database" => { value => $db_name },
     "mongodb/user" => { value => $db_user },
     "mongodb/password" => { value => $db_password },
+    "mongodb/connectionString" => { value => $db_connection_string}
   }
 
 	# TODO: put node_config into a file resource (ie production.yaml)
