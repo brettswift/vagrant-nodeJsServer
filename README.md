@@ -11,6 +11,8 @@ The nodejs application is configured simply with:
 * branch/tag (default: master)
 * file to start your web app (default app.js)
 
+###configuration###
+`db_connection_string` is passed into the yaml_entries of nodesite.  This is the only way to connect uptime to the database currently.  Authentication between how mongo is configued via the puppetlabs-mongodb module, and how uptime connects, is not functional. 
 
 Run: `vagrant up` and you will have a running nodejs application in under 4 minutes mapped to `http://localhost:8082`. 
 
