@@ -19,6 +19,8 @@ mod 'stmod',
 mod 'ripienaar/module_data', '0.0.3'
 mod 'willdurand/nodejs', '1.6.4'
 mod 'maestrodev/wget', '1.4.1'
-mod 'nodesite',
-    :git => 'git://github.com/brettswift/puppet-nodesite.git',
-    :ref => 'master'
+mod 'reidmv/yamlfile', '0.2.0'
+mod 'adrien/filemapper', '1.1.2'
+# mod 'nodesite',
+#     :git => 'git://github.com/brettswift/puppet-nodesite.git',
+#     :ref => 'bugfix/config_file'

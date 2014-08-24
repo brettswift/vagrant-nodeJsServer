@@ -17,6 +17,9 @@ Vagrant.configure("2") do |config|
 
 		nodeserver.vm.network :private_network, ip: "33.33.33.10"
 		nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
+		nodeserver.vm.network :forwarded_port, guest: 28017, host: 28017
+		nodeserver.vm.network :forwarded_port, guest: 18017, host: 18017
+
  
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path 		= "manifests"
@@ -25,10 +28,11 @@ Vagrant.configure("2") do |config|
 			puppet.options 						= "--verbose"
 		end
 
+		#in 'live_modules', move project here to do live development
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path         = "manifests"
 			puppet.manifest_file          = "site.pp"
-			puppet.module_path 		        = ['modules','modules_site']
+			puppet.module_path 		        = ['live_modules','modules','modules_site']
 			puppet.working_directory			= "/vagrant"
 			puppet.options        				= "--verbose --trace"#--graph --graphdir /vagrant/graphs"
 		end
