@@ -94,6 +94,8 @@ Vagrant.configure("2") do |config|
 
 				# https://devcenter.heroku.com/articles/ssl-certificate-self
 
+				#walkthrough on how to setup azure: https://github.com/phiche/vagrant-azure-example
+
 				override.vm.box 		     = "azure" #used for cloud provisioners
 				# override.vm.box_url 	   = "https://github.com/MSOpenTech/vagrant-azure/blob/master/dummy.box"
 
