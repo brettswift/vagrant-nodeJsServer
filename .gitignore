@@ -48,3 +48,4 @@ modules
 .tmp
 
 *.log.node-version
+.node-version
