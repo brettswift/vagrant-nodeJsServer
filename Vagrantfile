@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
 		nodeserver.vm.hostname = hostname
 
 		nodeserver.vm.provision :shell, :path => "./shell/bootstrap-vagrant-centos.sh"
-	
+
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path 		= "manifests"
 			puppet.manifest_file  		= "r10k_modules.pp"
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
 		nodeserver.vm.provision :puppet do |puppet|
 			puppet.manifests_path         = "manifests"
 			puppet.manifest_file          = "site.pp"
-			puppet.module_path 		        = 'modules'
+			# puppet.module_path 		        = 'modules'
 			puppet.working_directory			= "/vagrant"
 			puppet.options        				= "--verbose"#--graph --graphdir /vagrant/graphs"
 		end
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 		########  Providers ############
 		nodeserver.vm.provider :virtualbox do |vb|
 
-			
+
 			nodeserver.vm.network :private_network, ip: "33.33.33.10"
 	    nodeserver.vm.network :forwarded_port, guest: 8082, host: 8082
 
@@ -58,9 +58,9 @@ Vagrant.configure("2") do |config|
 
 		  config.ssh.pty                = true
 			aws.keypair_name              = "vagrant"
-			aws.access_key_id             = "#{ENV['AWS_ACCESS_KEY_ID']}"  
-			aws.secret_access_key         = "#{ENV['AWS_SECRET_ACCESS_KEY']}"  
-			# aws.ami                     = "ami-043a5034" # amazon linux 64bit. puppet 2.7 :( 
+			aws.access_key_id             = "#{ENV['AWS_ACCESS_KEY_ID']}"
+			aws.secret_access_key         = "#{ENV['AWS_SECRET_ACCESS_KEY']}"
+			# aws.ami                     = "ami-043a5034" # amazon linux 64bit. puppet 2.7 :(
 			aws.ami                       = "ami-b158c981" #centos 64 bit minimal:  http://goo.gl/tqeOty
 			aws.region                    = "us-west-2"
 			aws.instance_type             = "t1.micro"
@@ -84,42 +84,45 @@ Vagrant.configure("2") do |config|
   	end
 
 		nodeserver.vm.provider :azure do |azure, override|
-				#to generate a cert: 
+				#to generate a cert:
 				# openssl req -x509 -nodes -days 3650  -newkey rsa:1024 -keyout cert.pem -out cert.pem
 				# openssl pkcs12 -export -out cert.pfx -in cert.pem -name "Bretts Azure Cert"
 				# openssl x509 -inform pem -in cert.pem -outform der -out cert.cer
 
 				# openssl req -out CSR.csr -key ~/.ssh/azure/new/id_rsa -new
 				# openssl x509 -req -days 3650 -in ./CSR.csr -signkey ~/.ssh/azure/new/id_rsa -out vagrant.crt
-				
+
 				# https://devcenter.heroku.com/articles/ssl-certificate-self
 
 				override.vm.box 		     = "azure" #used for cloud provisioners
-				override.vm.box_url 	   = "https://github.com/MSOpenTech/vagrant-azure/blob/master/dummy.box"
-		    
-		    azure.vm_image						 = "CentOS6-5-Minimal"
+				# override.vm.box_url 	   = "https://github.com/MSOpenTech/vagrant-azure/blob/master/dummy.box"
 
-        # azure.mgmt_certificate     = "#{ENV['HOME']}/.ssh/azure/new/vagrant.crt"
-        azure.mgmt_certificate     = "#{ENV['HOME']}/.ssh/azure/new2/cert.pem"
+		    azure.vm_image						 = "CentOS6-5-Minimal"
+				#image names
+				# 0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.5-x64-v14.1.3
+				# CentOS6-5-Minimal
+
+        azure.mgmt_certificate     = "#{ENV['HOME']}/.azure/cert.pem"
         azure.mgmt_endpoint        = 'https://management.core.windows.net'
         azure.subscription_id      = "#{ENV['AZURE_SUBSCRIPTION_ID']}"
-        # azure.storage_acct_name 	 = 'brettswiftstorage' # optional. A new one will be generated if not provided.
+        azure.storage_acct_name 	 = 'brettswiftstorage' # optional. A new one will be generated if not provided.
 
         # azure.vm_user = 'PROVIDE A USERNAME' # defaults to 'vagrant' if not provided
         azure.vm_password          = "#{ENV['AZURE_VM_PASSWORD']}" # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
 
-        azure.vm_name              = 'NodesiteServer' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
-        azure.cloud_service_name 	 = 'brettswifttesting' # same as vm_name. leave blank to auto-generate
-        # azure.deployment_name = 'PROVIDE A NAME FOR YOUR DEPLOYMENT' # defaults to cloud_service_name
+        azure.vm_name              = 'nodeserver' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+        azure.cloud_service_name 	 = 'nodesite_1' # same as vm_name. leave blank to auto-generate
+        # azure.deployment_name 		 = 'nodesite_deployment' # defaults to cloud_service_name
         azure.vm_location 				 = 'West US' # e.g., West US
-        azure.ssh_private_key_file = "#{ENV['HOME']}/.ssh/azure/new/id_rsa"
-        azure.ssh_certificate_file = "#{ENV['HOME']}/.ssh/azure/new/id_rsa.pub"
+        azure.ssh_private_key_file = "#{ENV['HOME']}/.ssh/id_rsa"
+        azure.ssh_certificate_file = "#{ENV['HOME']}/.ssh/ssh-cert.pem"
 
+				override.ssh.private_key_path = "~/.ssh/id_rsa"
         # Provide the following values if creating a *Nix VM
         azure.ssh_port             = '22' #A VALID PUBLIC PORT
 
 
-        azure.tcp_endpoints        = '8082:443:22:80' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
+        azure.tcp_endpoints        = '8082:443:22:80'
         # azure.tcp_endpoints = '3389:53389' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
     end
 
@@ -134,7 +137,7 @@ Vagrant.configure("2") do |config|
 
 	  end
 
-	  # think these are for aws and azure only? 
+	  # think these are for aws and azure only?
     config.ssh.username = 'vagrant' # the one used to create the VM
     config.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 

@@ -47,4 +47,4 @@ graphs/
 modules
 .tmp
 
-*.log
+*.log.node-version
