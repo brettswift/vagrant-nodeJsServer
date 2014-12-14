@@ -97,9 +97,15 @@ Vagrant.configure("2") do |config|
 				#walkthrough on how to setup azure: https://github.com/phiche/vagrant-azure-example
 
 				override.vm.box 		     = "azure" #used for cloud provisioners
-				# override.vm.box_url 	   = "https://github.com/MSOpenTech/vagrant-azure/blob/master/dummy.box"
+				override.vm.box_url 	   = "https://github.com/MSOpenTech/vagrant-azure/blob/master/dummy.box"
 
-		    azure.vm_image						 = "CentOS6-5-Minimal"
+		    azure.vm_image						 = 'CentOS6-5-Minimal'
+		    # azure.vm_image						 = '0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.5-x64-v14.1.3'
+				# azure.vm_image						 = '5112500ae3b842c8b9c604889f8753c3__OpenLogic-CentOS-65-20140926'
+				# azure.vm_image						   = '0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.4-x64-v13.5.0.2'
+				# azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04-LTS-amd64-server-20140528-en-us-30GB'
+
+
 				#image names
 				# 0b11de9248dd4d87b18621318e037d37__RightImage-CentOS-6.5-x64-v14.1.3
 				# CentOS6-5-Minimal
@@ -107,13 +113,14 @@ Vagrant.configure("2") do |config|
         azure.mgmt_certificate     = "#{ENV['HOME']}/.azure/cert.pem"
         azure.mgmt_endpoint        = 'https://management.core.windows.net'
         azure.subscription_id      = "#{ENV['AZURE_SUBSCRIPTION_ID']}"
-        azure.storage_acct_name 	 = 'brettswiftstorage' # optional. A new one will be generated if not provided.
+        # azure.storage_acct_name 	 = 'nodeserverstorage' # optional. A new one will be generated if not provided.
+				# azure.storage_acct_name 	 = 'brettswiftstorage'  #--> for 6.5 minimal
 
         # azure.vm_user = 'PROVIDE A USERNAME' # defaults to 'vagrant' if not provided
         azure.vm_password          = "#{ENV['AZURE_VM_PASSWORD']}" # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
 
         azure.vm_name              = 'nodeserver' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
-        azure.cloud_service_name 	 = 'nodesite_1' # same as vm_name. leave blank to auto-generate
+        # azure.cloud_service_name 	 = 'mynodesite' # same as vm_name. leave blank to auto-generate
         # azure.deployment_name 		 = 'nodesite_deployment' # defaults to cloud_service_name
         azure.vm_location 				 = 'West US' # e.g., West US
         azure.ssh_private_key_file = "#{ENV['HOME']}/.ssh/id_rsa"
@@ -126,7 +133,11 @@ Vagrant.configure("2") do |config|
 
         azure.tcp_endpoints        = '8082:443:22:80'
         # azure.tcp_endpoints = '3389:53389' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
+
+				override.ssh.username = 'vagrant'
+				override.ssh.password = "#{ENV['AZURE_VM_PASSWORD']}"
     end
+
 
     config.vm.provider :digital_ocean do |provider, override|
 	    override.ssh.private_key_path = '~/.ssh/id_rsa'
@@ -138,10 +149,6 @@ Vagrant.configure("2") do |config|
 	    # provider.image								= "CentOS 6.5 x64"
 
 	  end
-
-	  # think these are for aws and azure only?
-    config.ssh.username = 'vagrant' # the one used to create the VM
-    config.ssh.password = 'Pa55w0rd!' # the one used to create the VM
 
 	end
 end
